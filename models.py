@@ -93,10 +93,10 @@ class Actors(db.Model):
     __tablename__ = 'actors'
 
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(120))
-    lastname = db.Column(db.String(120))
-    age = db.Column(db.Integer)
-    gender = db.Column(db.String(32))
+    firstname = db.Column(db.String(120), nullable=False)
+    lastname = db.Column(db.String(120), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(32), nullable=False)
 
     '''
     insert()
