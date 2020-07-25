@@ -18,3 +18,66 @@ def db_setup(app):
     db.app = app
     db.init_app(app)
     migrate = Migrate(app, db)
+
+'''
+Movies
+    The table containing movies and their details
+'''
+
+
+class Movies(db.Model):
+    __tablename__ = 'movies'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(d.String(400), nullable=False, unique=True)
+    release_date = db.Column(db.String())
+    description = db.Column(db.String())
+
+    '''
+    insert()
+        inserts a new model into a database
+        the model must have a unique title
+        the model must have a unique id or null id
+        EXAMPLE
+            movie = Movies(title=req_title, release_date=req_release_date)
+            movie.insert()
+    '''
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    '''
+    update()
+        updates a new model into a database
+        the model must exist in the database
+        EXAMPLE
+            movie = Movies.query.filter(Movies.id == id).one_or_none()
+            movie.title = 'Wonder Woman 1984'
+            movie.update()
+    '''
+    def update(self):
+        db.session.commit()
+
+    '''
+    delete()
+        deletes a new model into a database
+        the model must exist in the database
+        EXAMPLE
+            movie = Movies(title=req_title, release_date=req_release_date)
+            movie.delete()
+    '''
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    '''
+    details()
+        details on the Movie model
+    '''
+    def details(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'release_date': self.release_date,
+            'description': self.description
+        }
