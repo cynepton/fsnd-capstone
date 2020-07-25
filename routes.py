@@ -1,5 +1,5 @@
-from app import APP
-from flask import Flask, render_template
+from app import app
+from flask import Flask, render_template, abort, jsonify
 from flask import request, Response, flash, redirect, url_for
 from models import Actors, Movies
 import os
@@ -17,11 +17,14 @@ def paginate_items(request, selection):
     page = request.args.get('page', 1, type=int)
     start = (page - 1) * page_limit
     end = start + page_limit
-
+    
+    if start is '':
+        start = 0
+        
     items = [item.details() for item in selection]
-    current_items = items[start:end]
+    current_items = items[int(start):int(end)]
 
-    return current_questions
+    return current_items
 
 # ACTORS
 # --------------------------------------------------------- #
@@ -35,7 +38,46 @@ GET /actors
     {
         "success": True,
         "actors": actors
+        "total": total_actors
     }
-    Where actors is a list of all actors in a page
+    Where actors is a list of all actors in a page,
+        total_actors is the total number of actors in the database
     Or any appropraite error
 '''
+
+@app.route('/actors')
+def get_paginated_actors():
+
+    selection = Actors.query.order_by(Actors.id).all()
+    total_actors = len(selection)
+    actors = paginate_items(request, selection)
+
+    if len(actors) == 0:
+        abort(404)
+
+    return jsonify({
+        "success": True,
+        "actors": actors,
+        "total": total_actors
+    })
+
+'''
+@app.errorhandlers
+    Error handlers for expected errors
+'''
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        'success': False,
+        'error': 400,
+        'message': 'Bad request'
+    }), 400
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        'success': False,
+        'error': 404,
+        'message': 'Resource not found'
+    }), 404
