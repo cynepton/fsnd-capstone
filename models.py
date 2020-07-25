@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
 db = SQLAlchemy()
 
@@ -29,7 +30,7 @@ class Movies(db.Model):
     __tablename__ = 'movies'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(d.String(400), nullable=False, unique=True)
+    title = db.Column(db.String(400), nullable=False, unique=True)
     release_date = db.Column(db.String())
     description = db.Column(db.String())
 
