@@ -72,7 +72,7 @@ class Movies(db.Model):
 
     '''
     details()
-        details on the Movie model
+        details on each movie
     '''
     def details(self):
         return {
@@ -80,4 +80,70 @@ class Movies(db.Model):
             'title': self.title,
             'release_date': self.release_date,
             'description': self.description
+        }
+
+'''
+Actors
+    The table containing actors and their details
+'''
+
+
+class Actors(db.Model):
+    __tablename__ = 'actors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(120))
+    lastname = db.Column(db.String(120))
+    age = db.Column(db.Integer)
+    gender = db.Column(db.String(32))
+
+    '''
+    insert()
+        inserts a new model into a database
+        the model must have a unique title
+        the model must have a unique id or null id
+        EXAMPLE
+            actor = Actors(firstname=Keanu, lastname=Reeves)
+            actor.insert()
+    '''
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    '''
+    update()
+        updates a new model into a database
+        the model must exist in the database
+        EXAMPLE
+            actor = Actors.query.filter(Actors.id == id).one_or_none()
+            actor.lastname = 'Cavill'
+            actor.update()
+    '''
+    def update(self):
+        db.session.commit()
+
+    '''
+    delete()
+        deletes a new model into a database
+        the model must exist in the database
+        EXAMPLE
+            actor = Actors(firstname=Keanu, lastname=Reeves)
+            actor.delete()
+    '''
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    '''
+    details()
+        details on each actor
+    '''
+    def details(self):
+        return {
+            'id': self.id,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'age': self.age,
+            'gender': self.gender
         }
