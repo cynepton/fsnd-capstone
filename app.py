@@ -3,14 +3,20 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_moment import Moment
+from models import db_setup
+
+'''
+App Config
+    Creates the flask app
+'''
+
 
 def create_app(test_config=None):
     # create and configure the app
     # app = Flask(__name__)
-    # CORS(app)
     app = Flask(__name__)
-    moment = Moment(app)
     db = db_setup(app)
+    CORS(app)
 
     return app
 
