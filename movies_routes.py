@@ -47,3 +47,67 @@ def get_paginated_movies():
     }), 200
 
 
+'''
+POST /movies
+    It takes new movie details as a JSON body
+    Movie details format:
+    {
+        "title": "Avengers: Endgame",
+        "release_date": "2019-05-20",
+        "description": "movie description",
+    }
+    The title key must not be null
+    It returns a status code of 200, and:
+    {
+        "success": True,
+        "movie": movie
+    }
+    Where movie is a python dictionary of the movie details
+'''
+
+
+@app.route('/movies', methods=['POST'])
+def post_movie():
+    # Gets the JSON body
+    data = request.get_json()
+    # print(data)
+
+    # Checks that the JSON contains the complete details
+    if 'title' not in data:
+        abort(422)
+
+    # Gets each movie detail
+    movie_title = data.get('title')
+    movie_release_date = None
+    movie_description = None
+
+    if 'release_date' in data:
+        movie_release_date = data.get('release_date')
+
+    if 'description' in data:
+        movie_description = data.get('description')
+
+    # Checks that the movie title is not empty
+    if movie_title is None:
+        abort(400)
+
+    # Initiates an instance of the Movies row
+    new_movie = Movies(
+        title=movie_title,
+        release_date=movie_release_date,
+        description=movie_description
+    )
+    try:
+        # Insert the new movie details into the database
+        new_movie.insert()
+    except Exception:
+        abort(422)
+
+    movie = new_movie.details()
+
+    return jsonify({
+        "success": True,
+        "movie": movie
+    }), 200
+
+
