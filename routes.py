@@ -3,6 +3,10 @@ from flask import Flask, render_template, abort, jsonify
 from flask import request, Response, flash, redirect, url_for
 from models import Actors, Movies
 import os
+import json
+from sqlalchemy import exc
+
+from auth.auth import AuthError, requires_auth
 
 # Max items per page
 page_limit = os.environ['ITEMS_PER_PAGE']
@@ -317,3 +321,14 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
+@app.errorhandler(AuthError)
+def processAuthError(error):
+    message = [str(x) for x in error.args]
+    status_code = error.status_code
+
+    return jsonify({
+        "success": False,
+        "error": status_code,
+        "message": message
+    }), status_code
