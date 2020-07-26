@@ -183,3 +183,35 @@ def patch_movies(id):
     }), 200
 
 
+'''
+DELETE /movies/<int:id>
+        where <id> is the existing model id
+        it responds with a 404 error if <id> is not found
+        it deletes the corresponding row for <id>
+    returns status code 200 and json
+    {
+        "success": True,
+        "delete": id
+    }
+    where id is the id of the deleted record
+        or appropriate status code indicating reason for failure
+'''
+
+
+@app.route('/movies/<int:id>', methods=['DELETE'])
+def delete_movies(id):
+    movie_to_delete = Movies.query.get(id)
+    if movie_to_delete is None:
+        abort(404)
+
+    id = movie_to_delete.id
+
+    try:
+        movie_to_delete.delete()
+    except Exception:
+        abort(422)
+
+    return jsonify({
+        "success": True,
+        "delete": id
+    }), 200
