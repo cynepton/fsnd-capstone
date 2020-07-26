@@ -231,6 +231,41 @@ def patch_actors(id):
 
 
 '''
+DELETE /drinks/<int:id>
+        where <id> is the existing model id
+        it responds with a 404 error if <id> is not found
+        it deletes the corresponding row for <id>
+        it requires the 'delete:drinks' permission
+    returns status code 200 and json
+    {
+        "success": True,
+        "delete": id
+    }
+    where id is the id of the deleted record
+        or appropriate status code indicating reason for failure
+'''
+
+
+@app.route('/actors/<int:id>', methods=['DELETE'])
+def delete_actors(id):
+    actor_to_delete = Actors.query.get(id)
+    if actor_to_delete is None:
+        abort(404)
+
+    id = actor_to_delete.id
+
+    try:
+        actor_to_delete.delete()
+    except Exception:
+        abort(422)
+
+    return jsonify({
+        "success": True,
+        "delete": id
+    }), 200
+
+
+'''
 @app.errorhandlers
     Error handlers for expected errors
 '''
