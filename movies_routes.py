@@ -111,3 +111,75 @@ def post_movie():
     }), 200
 
 
+'''
+PATCH /movies/<int:id>
+    It takes the movie id
+    Movie with the inputted id must exist in the database
+    It takes the movie details to be updated as a JSON body
+    Movie details can have all or none of these:
+    {
+        "title": "Avengers: Endgame",
+        "release_date": "2019-05-20",
+        "description": "movie description",
+    }
+    No key should have a null value
+    Instead omit it completely
+    If successful:
+    It returns a status code of 200, and:
+    {
+        "success": True,
+        "movie": movie
+    }
+    Where movie is a python dictionary of the movie details
+'''
+
+
+@app.route('/movies/<int:id>', methods=['PATCH'])
+def patch_movies(id):
+
+    # Get the id of the movie to be updated
+    movie_to_patch = Movies.query.get(id)
+    # Return a 404 error if the id doesn't exist
+    if movie_to_patch is None:
+        abort(404)
+
+    # Get the JSON body
+    data = request.get_json()
+
+    # Update the movie details
+    # Return a 400 error if the key values are null
+    if 'title' in data:
+
+        if data.get('title') is None:
+            abort(400)
+
+        movie_to_patch.title = data.get('title')
+
+    if 'release_date' in data:
+
+        if data.get('release_date') is None:
+            abort(400)
+
+        movie_to_patch.release_date = data.get('release_date')
+
+    if 'description' in data:
+
+        if data.get('description') is None:
+            abort(400)
+
+        movie_to_patch.description = data.get('description')
+
+    # Add the new details to the the database
+    try:
+        movie_to_patch.update()
+    except Exception:
+        abort(422)
+
+    movie = movie_to_patch.details()
+
+    return jsonify({
+        "success": True,
+        "movie": movie
+    }), 200
+
+
