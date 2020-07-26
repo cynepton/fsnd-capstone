@@ -69,6 +69,85 @@ def get_paginated_actors():
     })
 
 '''
+POST /actors
+    It takes new actor details as a JSON body
+    Actor details must have these at minimum:
+    {
+        "firstname": "Keanu",
+        "lastname": "Reeves",
+        "age": 55,
+        "gender": "Male"
+    }
+    Age must be a number
+    There must be no empty or missing entries
+    It returns a status code of 200, and:
+    {
+        "success": True,
+        "actor": actor
+    }
+    Where actor is a python dictionary of the actor details
+'''
+
+@app.route('/actors', methods=['POST'])
+def post_actor():
+    # Gets the JSON body
+    data = request.get_json()
+    # print(data)
+
+    # Checks that the JSON contains the complete details
+    if 'firstname' not in data:
+        abort(422)
+    if 'lastname' not in data:
+        abort(422)
+    if 'gender' not in data:
+        abort(422)
+    if 'age' not in data:
+        abort(422)
+
+    # Gets each actor detail
+    actor_firstname = data.get('firstname')
+    actor_lastname = data.get('lastname')
+    actor_age = int(data.get('age'))
+    actor_gender = data.get('gender')
+
+    # Checks that the details are not empty
+    if actor_firstname is None:
+        abort(400)
+    if actor_lastname is None:
+        abort(400)
+    if actor_age is None:
+        abort(400)
+    if actor_gender is None:
+        abort(400)
+    
+    # Checks that the age is an integer
+    try:
+        int(actor_age)
+    except Exception:
+        abort(404)
+
+    # Initiates an instance of the Actors row
+    new_actor = Actors(
+        firstname=actor_firstname,
+        lastname=actor_lastname,
+        age=actor_age,
+        gender=actor_gender
+    )
+
+    try:
+        # Insert the new actor details into the database
+        new_actor.insert()
+    except Exception:
+        abort(422)
+
+    actor = new_actor.details()
+
+    return jsonify({
+        "success": True,
+        "actor": actor
+    })
+
+'''
 @app.errorhandlers
     Error handlers for expected errors
 '''
@@ -92,7 +171,7 @@ def not_found(error):
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
-                    "success": False,
-                    "error": 422,
-                    "message": "unprocessable"
-                    }), 422
+        "success": False,
+        "error": 422,
+        "message": "unprocessable"
+    }), 422
