@@ -265,6 +265,11 @@ def delete_actors(id):
     }), 200
 
 
+# ACTORS
+# --------------------------------------------------------- #
+from movies_routes import *
+
+
 '''
 @app.errorhandlers
     Error handlers for expected errors
