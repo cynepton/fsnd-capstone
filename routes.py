@@ -20,7 +20,7 @@ def paginate_items(request, selection):
     
     if start is '':
         start = 0
-        
+
     items = [item.details() for item in selection]
     current_items = items[int(start):int(end)]
 
@@ -47,6 +47,13 @@ GET /actors
 
 @app.route('/actors')
 def get_paginated_actors():
+
+    # Check if the page argument is an integer
+    if request.args.get('page'):
+        try:
+            int(request.args.get('page'))
+        except Exception:
+            abort(422)
 
     selection = Actors.query.order_by(Actors.id).all()
     total_actors = len(selection)
@@ -81,3 +88,11 @@ def not_found(error):
         'error': 404,
         'message': 'Resource not found'
     }), 404
+
+@app.errorhandler(422)
+def unprocessable(error):
+    return jsonify({
+                    "success": False,
+                    "error": 422,
+                    "message": "unprocessable"
+                    }), 422
