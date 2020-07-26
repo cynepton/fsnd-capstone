@@ -45,6 +45,7 @@ GET /actors
     Or any appropraite error
 '''
 
+
 @app.route('/actors')
 def get_paginated_actors():
 
@@ -66,7 +67,8 @@ def get_paginated_actors():
         "success": True,
         "actors": actors,
         "total": total_actors
-    })
+    }), 200
+
 
 '''
 POST /actors
@@ -87,6 +89,7 @@ POST /actors
     }
     Where actor is a python dictionary of the actor details
 '''
+
 
 @app.route('/actors', methods=['POST'])
 def post_actor():
@@ -145,12 +148,93 @@ def post_actor():
     return jsonify({
         "success": True,
         "actor": actor
-    })
+    }), 200
+
+
+'''
+PATCH /actors/<int:id>
+    It takes the actor id
+    Actor with the inputted id must exist in the database
+    It takes the actor details to be updated as a JSON body
+    Actor details can have all or none of these:
+    {
+        "firstname": "Keanu",
+        "lastname": "Reeves",
+        "age": 55,
+        "gender": "Male"
+    }
+    Age must be a number
+    Each key must not have a null value
+    It returns a status code of 200, and:
+    {
+        "success": True,
+        "actor": actor
+    }
+    Where actor is a python dictionary of the actor details
+'''
+
+
+@app.route('/actors/<int:id>', methods=['PATCH'])
+def patch_actors(id):
+
+    # Get the id of the actor to be updated
+    actor_to_patch = Actors.query.get(id)
+    # Return a 404 error if the id doesn't exist
+    if actor_to_patch is None:
+        abort(404)
+
+    # Get the JSON body
+    data = request.get_json()
+
+    # Update the actor details
+    # Return a 400 error if the key values are null
+    if 'firstname' in data:
+
+        if data.get('firstname') is None:
+            abort(400)
+
+        actor_to_patch.firstname = data.get('firstname')
+
+    if 'lastname' in data:
+
+        if data.get('lastname') is None:
+            abort(400)
+
+        actor_to_patch.lastname = data.get('lastname')
+
+    if 'age' in data:
+
+        if data.get('age') is None:
+            abort(400)
+
+        actor_to_patch.age = data.get('age')
+
+    if 'gender' in data:
+
+        if data.get('gender') is None:
+            abort(400)
+
+        actor_to_patch.gender = data.get('gender')
+
+    # Add the new details to the the database
+    try:
+        actor_to_patch.update()
+    except Exception:
+        abort(422)
+
+    actor = actor_to_patch.details()
+
+    return jsonify({
+        "success": True,
+        "actor": actor
+    }), 200
+
 
 '''
 @app.errorhandlers
     Error handlers for expected errors
 '''
+
 
 @app.errorhandler(400)
 def bad_request(error):
