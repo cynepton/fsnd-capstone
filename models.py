@@ -5,7 +5,7 @@ import os
 db = SQLAlchemy()
 
 # Path is stored in the virtual environment
-# with a key name of DATABASE_PATH 
+# with a key name of DATABASE_PATH
 database_path = os.environ['DATABASE_PATH']
 '''
 setup_db(app)
