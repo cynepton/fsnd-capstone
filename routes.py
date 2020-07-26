@@ -163,7 +163,7 @@ PATCH /actors/<int:id>
         "age": 55,
         "gender": "Male"
     }
-    Age must be a number
+    Age must be an integer
     Each key must not have a null value
     It returns a status code of 200, and:
     {
@@ -231,11 +231,10 @@ def patch_actors(id):
 
 
 '''
-DELETE /drinks/<int:id>
+DELETE /actors/<int:id>
         where <id> is the existing model id
         it responds with a 404 error if <id> is not found
         it deletes the corresponding row for <id>
-        it requires the 'delete:drinks' permission
     returns status code 200 and json
     {
         "success": True,
@@ -283,6 +282,22 @@ def bad_request(error):
         'error': 400,
         'message': 'Bad request'
     }), 400
+
+@app.errorhandler(401)
+def unauthorized(error):
+    return jsonify({
+        'success': False,
+        'error': 401,
+        'message': 'Unauthorized'
+    }), 401
+
+@app.errorhandler(403)
+def forbidden(error):
+    return jsonify({
+        'success': False,
+        'error': 403,
+        'message': 'Forbidden'
+    }), 403
 
 @app.errorhandler(404)
 def not_found(error):
