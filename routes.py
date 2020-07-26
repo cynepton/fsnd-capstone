@@ -45,6 +45,9 @@ GET /actors
     Or any appropraite error
 '''
 
+@app.route('/')
+def index_endpoint():
+    return "Udacity FSND Casting Agency App"
 
 @app.route('/actors')
 def get_paginated_actors():
