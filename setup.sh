@@ -1,6 +1,6 @@
 
 # Database URI
-export DATABASE_PATH = postgresql://cynepton:cynepton@localhost:5432/fsnd-capstone
+export DATABASE_PATH = postgres://tpxcshvzuyqukn:97e11af68e240436016991a752268a6e68c3493df8f5b071f5599e72bf3b3e40@ec2-54-243-67-199.compute-1.amazonaws.com:5432/db52giu4fk2do4
 
 # Environment Variables
 export ITEMS_PER_PAGE = 10
