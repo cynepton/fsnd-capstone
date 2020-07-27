@@ -99,6 +99,7 @@ POST /actors
 
 
 @app.route('/actors', methods=['POST'])
+@requires_auth('post:actors')
 def post_actor():
     # Gets the JSON body
     data = request.get_json()
@@ -182,6 +183,7 @@ PATCH /actors/<int:id>
 
 
 @app.route('/actors/<int:id>', methods=['PATCH'])
+@requires_auth('patch:actors')
 def patch_actors(id):
 
     # Get the id of the actor to be updated
@@ -253,6 +255,7 @@ DELETE /actors/<int:id>
 
 
 @app.route('/actors/<int:id>', methods=['DELETE'])
+@requires_auth('delete:actors')
 def delete_actors(id):
     actor_to_delete = Actors.query.get(id)
     if actor_to_delete is None:

@@ -4,6 +4,8 @@ from app import app
 from flask import Flask, render_template, abort, jsonify
 from flask import request, Response, flash, redirect, url_for
 
+from auth.auth import requires_auth
+
 '''
 GET /movies
     It is a public endpoint available to all three roles
@@ -67,6 +69,7 @@ POST /movies
 
 
 @app.route('/movies', methods=['POST'])
+@requires_auth('post:movies')
 def post_movie():
     # Gets the JSON body
     data = request.get_json()
@@ -135,6 +138,7 @@ PATCH /movies/<int:id>
 
 
 @app.route('/movies/<int:id>', methods=['PATCH'])
+@requires_auth('patch:movies')
 def patch_movies(id):
 
     # Get the id of the movie to be updated
@@ -199,6 +203,7 @@ DELETE /movies/<int:id>
 
 
 @app.route('/movies/<int:id>', methods=['DELETE'])
+@requires_auth('delete:movies')
 def delete_movies(id):
     movie_to_delete = Movies.query.get(id)
     if movie_to_delete is None:
