@@ -28,7 +28,7 @@ if __name__ == '__main__':
     # APP.run(host='0.0.0.0', port=8080, debug=True)
     app.run(port=8080, debug=True)
 
-
+# Returns the login url for auth0
 @app.route("/auth")
 def generate_auth_url():
     url = f'https://{AUTH0_DOMAIN}/authorize' \
