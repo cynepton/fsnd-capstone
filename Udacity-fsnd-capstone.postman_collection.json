@@ -1,0 +1,1727 @@
+{
+	"info": {
+		"_postman_id": "3bdbcda4-17cb-462c-b957-7467c1093986",
+		"name": "Udacity-fsnd-capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "casting_assistant",
+			"item": [
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb85e8ef-9d3b-414b-bca1-af5d1b52cd9e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains actors array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actors).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors non-int page arg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6246dc7c-2a06-41cd-b589-1496752028c4",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors?page=abc",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "abc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9ebd7cc-0615-41ec-82ab-9c4099ce6049",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains movies array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movies).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies non-int page arg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "920e7490-024a-4396-907f-e9ac756d7593",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies?page=abc",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "abc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82c2e719-db16-4621-854c-6795fc1d1de9",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"William\",\r\n    \"lastname\": \"Smith\",\r\n    \"age\": 51,\r\n    \"gender\": \"Male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92b71c69-7819-4cfe-8465-585ae4786f70",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Stranger Things\",\r\n    \"release_date\": \"2020-10-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c66197b-9fad-4d0d-b8f5-143e75d5d182",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"A movie about strange things\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies/13",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b597da6-dfb5-4ad0-b934-f474025c9618",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Will\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors/18",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a06aa574-1d9d-4c53-9e2b-2fdaa955a544",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/18",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "778b8d41-21f9-45d8-8d46-4cec597bd541",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/13",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "casting_director",
+			"item": [
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2b47d8f0-c566-485a-9f9b-4b6af9d797ee",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains actors array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actors).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbd86882-2fb7-470f-9965-6125e6063241",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains movies array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movies).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f381e6a3-6500-4e32-aa08-4911df6d3b0a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains posted actor details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actor).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Anya\",\r\n    \"lastname\": \"Taylor\",\r\n    \"age\": 24,\r\n    \"gender\": \"Female\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors missing firstname key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef8a27fd-b35e-46ea-9faf-86bdb5eff0fd",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastname\": \"Taylor\",\r\n    \"age\": 24,\r\n    \"gender\": \"Female\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors missing key value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "18d311cc-1098-422d-a7cb-c2f1fb489424",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\":,\r\n    \"lastname\": \"Taylor\",\r\n    \"age\": 24,\r\n    \"gender\": \"Female\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors non integer age value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "541b9859-50ca-4fb0-a39d-601ebce88de9",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Anya\",\r\n    \"lastname\": \"Taylor\",\r\n    \"age\": \"Twenty-four\",\r\n    \"gender\": \"Female\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "188e1616-7a96-4fd9-95e2-94dbbe955921",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Stranger Things\",\r\n    \"release_date\": \"2020-10-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f5dd12b4-afd4-4f39-b358-466475dcd119",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response contains patched movie details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movie).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"A movie about strange things\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id> empty key value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f6e6752-a415-4d46-838a-e2c88e5094e4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":,\r\n    \"release_date\": \"2020-05-21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id> unavailable movie id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b892665-2d06-49ce-8105-44b2abe01c7d",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"A movie about strange things\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies/200",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d58cb750-1575-43ff-9223-d6411aad74d6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response contains patched movie details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actor).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastname\": \"Williams\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id> unavailable actor id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cca194d0-19ee-40d9-bb89-4c34d2ce5f21",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastname\": \"Taylor-Joy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors/180",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"180"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8ee86dc-41f0-4074-b6fe-3abc172884b3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/18",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id> Unavailable actor id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c8a72cc6-405d-407d-ae8e-77baaf8dd94d",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/180",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"180"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7e6b24f-d398-407b-90e4-d2873a006993",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/13",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNyekVBNG04R1JpSEdpNXF1UDcyeiJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktZnNuZC1jYXBzdG9uZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZGZkZGUyOGRkYmEwMDM3NDNhZWIxIiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTU4NTQ4NTcsImV4cCI6MTU5NTk0MTI1NywiYXpwIjoiZUR4VTFnTFFKb2c5ZnFSR0JZN2tSM2RPN0wyM1FaWUIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyJdfQ.OhMcmC64nm5ofux3k4clqgA2vUKsPfmDEZ6_xubmMfXdpDIkjc_7m7dKF3eKdjMb66qtfCsmpTYZkYaQThHqgbY4VYTPv3wF0IeyoDEdz8jgY-dxcTPP48CEkqEi1ik_mn1qS_OHszx8ZxTJH0lgEbVuO5cu1DD0baX6apyQ3IqLSzDeT8b5s0-dRN7oivdq3iNV3lbp5ZxWue7RlvFX_FSs0eYYZ6xjBkA59eUK-1C_409gmA2nH9gX9kJKWWThIHxncJJfuZh42nUhANsIZ3H3SzRNHGoeulVVthGRcHebJmMeNo_gl_K4Sz0AflRlY8EtnSfXQ0m1I6sI9oOvUw",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "40fbde55-e9ca-46e8-8724-18954a2bf400",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f9699e5-5b11-44bd-a91e-9a316f8dba39",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "executive_producer",
+			"item": [
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4e36232-1142-4cde-a98b-bab463518d87",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains actors array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actors).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9194656c-8af5-481b-b2f1-936329378d98",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains movies array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movies).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00f8d074-f475-4bf2-aa01-8ba333a37de2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains posted actor details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actor).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Will\",\r\n    \"lastname\": \"Smith\",\r\n    \"age\": 51,\r\n    \"gender\": \"Male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dad4ddca-968a-4781-8d5e-4b7b5bdaa446",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response contains posted movie details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movie).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Stranger Things\",\r\n    \"release_date\": \"2020-10-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies missing movie title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "597e0cf6-b9b1-4390-bd02-9fbb3c5403ee",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "text/plain",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"release_date\": \"2020-10-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6402c71c-7758-40f0-93c9-8867e3e9a84e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response contains patched movie details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movie).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1f8ff1c2-e6e8-496a-80d9-3c8301f19c98",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"A movie about strange things\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movies/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6813bb60-85ec-4288-a5f5-dfaadfa87ed7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response contains patched actor details\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.actor).to.be.an('object')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Maisie\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/actors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6c8f590-51b3-440f-b9cf-5cc8e89c2735",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/19",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ee1461c-2763-4301-b2ee-b9ddfa6f21d8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/<int:id> Unavailable movie id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92cb029e-fa5b-459a-90fb-8e4fcb409def",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response must be JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/200",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"200"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNyekVBNG04R1JpSEdpNXF1UDcyeiJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktZnNuZC1jYXBzdG9uZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZGZkYjNlNmEyOTEwMDM3Mjc3NDhiIiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTU4NjgxOTUsImV4cCI6MTU5NTk1NDU5NSwiYXpwIjoiZUR4VTFnTFFKb2c5ZnFSR0JZN2tSM2RPN0wyM1FaWUIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.Xqx_h37AASFIWEdoOF8l9wTPj5Bw1SsZsbKY72UM2oZEu5Q8L6RHyobQa6e3-NpLqv4wBN3pyX6y0NimpiOkx5g9OfXM-rQcBziKi4BVn5NMMAu1BkhL6f8RdyKNHYtTgPgd2WZFmpO20b6Cq5X-VW4blBz2Y8tkLDOXagAHfzg836m_FqTSMu2BJRsoVAWm1PxVkvkYA3IhG7H_zEGJgDDpNg1Z4x_YvR2_0-oI6CE5paYKU1dvBf9MuGIgzwK5hT5STfEzU1TIg4f7ERweziQkeRUToZxKOj9CGT7v-xP1-QQNes-AKHCsHWr1IfTS3H1ZkqHEpLG86tjH2l9Ncg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "eefd672a-1db7-4bbe-bca4-7887fcb70497",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "079fd3f2-2247-46f6-9ae1-aaa6c378736b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c5422091-310f-4a34-a857-7652c29f5b4b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8f66e594-ec9c-4c60-957e-fb1eae06994f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ba2b2ac1-2760-4190-8039-f222579899c0",
+			"key": "host",
+			"value": "https://fsnd-capstone-cynepton.herokuapp.com"
+		},
+		{
+			"id": "40fcba26-3049-41cf-86f9-62b00ccf97cd",
+			"key": "localhost",
+			"value": "localhost:5000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
