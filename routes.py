@@ -100,7 +100,7 @@ POST /actors
 
 @app.route('/actors', methods=['POST'])
 @requires_auth('post:actors')
-def post_actor():
+def post_actor(jwt):
     # Gets the JSON body
     data = request.get_json()
     # print(data)
@@ -114,6 +114,12 @@ def post_actor():
         abort(422)
     if 'age' not in data:
         abort(422)
+
+    # Checks that the age is an integer
+    try:
+        int(data.get('age'))
+    except Exception:
+        abort(400)
 
     # Gets each actor detail
     actor_firstname = data.get('firstname')
@@ -130,12 +136,6 @@ def post_actor():
         abort(400)
     if actor_gender is None:
         abort(400)
-    
-    # Checks that the age is an integer
-    try:
-        int(actor_age)
-    except Exception:
-        abort(404)
 
     # Initiates an instance of the Actors row
     new_actor = Actors(
@@ -184,7 +184,7 @@ PATCH /actors/<int:id>
 
 @app.route('/actors/<int:id>', methods=['PATCH'])
 @requires_auth('patch:actors')
-def patch_actors(id):
+def patch_actors(jwt, id):
 
     # Get the id of the actor to be updated
     actor_to_patch = Actors.query.get(id)
@@ -256,7 +256,7 @@ DELETE /actors/<int:id>
 
 @app.route('/actors/<int:id>', methods=['DELETE'])
 @requires_auth('delete:actors')
-def delete_actors(id):
+def delete_actors(jwt, id):
     actor_to_delete = Actors.query.get(id)
     if actor_to_delete is None:
         abort(404)
