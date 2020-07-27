@@ -17,11 +17,12 @@ paginate_items()
     and returns a particular list of items per page
 '''
 
+
 def paginate_items(request, selection):
     page = request.args.get('page', 1, type=int)
     start = (page - 1) * page_limit
     end = start + page_limit
-    
+
     if start is '':
         start = 0
 
@@ -30,8 +31,10 @@ def paginate_items(request, selection):
 
     return current_items
 
+
 # ACTORS
 # --------------------------------------------------------- #
+
 
 '''
 GET /actors
@@ -49,9 +52,11 @@ GET /actors
     Or any appropraite error
 '''
 
+
 @app.route('/')
 def index_endpoint():
     return "Udacity FSND Casting Agency App"
+
 
 @app.route('/actors')
 def get_paginated_actors():
@@ -293,6 +298,7 @@ def bad_request(error):
         'message': 'Bad request'
     }), 400
 
+
 @app.errorhandler(401)
 def unauthorized(error):
     return jsonify({
@@ -300,6 +306,7 @@ def unauthorized(error):
         'error': 401,
         'message': 'Unauthorized'
     }), 401
+
 
 @app.errorhandler(403)
 def forbidden(error):
@@ -309,6 +316,7 @@ def forbidden(error):
         'message': 'Forbidden'
     }), 403
 
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -317,6 +325,7 @@ def not_found(error):
         'message': 'Resource not found'
     }), 404
 
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
@@ -324,6 +333,7 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
 
 @app.errorhandler(AuthError)
 def processAuthError(error):
