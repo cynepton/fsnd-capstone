@@ -20,6 +20,7 @@ def db_setup(app):
     db.init_app(app)
     migrate = Migrate(app, db)
 
+
 '''
 Movies
     The table containing movies and their details
@@ -82,6 +83,7 @@ class Movies(db.Model):
             'release_date': self.release_date,
             'description': self.description
         }
+
 
 '''
 Actors
