@@ -338,6 +338,12 @@ returns status code 200 and:
 ```
 where `id` is the id of the deleted record
 
+## Testing
+
+A postman collection has been created for testing the endpoints.
+Import [the file](Udacity-fsnd-capstone.postman_collection.json) into Postman to run the tests.
+Adjust the values of the variables `HOST` and the Tokens where appropraite
+
 ## Roles and Permissions
 The application has 3 roles setup:
 
