@@ -55,7 +55,6 @@ GET /actors
 
 @app.route('/')
 def index_endpoint():
-    return "Savvy ng code test by Isaac Aderonmu"
     # return "Udacity FSND Casting Agency App"
 
 
