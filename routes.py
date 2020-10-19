@@ -55,7 +55,7 @@ GET /actors
 
 @app.route('/')
 def index_endpoint():
-    # return "Udacity FSND Casting Agency App"
+    return "Udacity FSND Casting Agency App"
 
 
 @app.route('/actors')
